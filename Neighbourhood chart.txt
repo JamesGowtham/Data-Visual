@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/changsheng006/data/master/belgium_airbnb_revised20200511.csv"
+  },
+  "selection": {
+    "select": {
+      "type": "single",
+      "fields": [
+        "property_type",
+        "place"
+      ],
+      "bind": {
+        "place": {
+          "input": "select",
+          "options": [
+            "Brussels",
+            "Ghent",
+            "Antwerp"
+            
+          ]
+        },
+        "property_type": {
+          "input": "select",
+          "options": [
+            "Apartment",
+            "House",
+            "Townhouse",
+            "Loft",
+            "Condominium",
+            "Serviced apartment",
+            "Bed and breakfast",
+            "Aparthotel",
+            "Guest suite",
+            "Boutique hotel",
+            "Hotel",
+            "Villa",
+            "Hostel"
+          ]
+        }
+      }
+    }
+  },
+  "transform": [
+    {
+      "filter": {
+        "selection": "select"
+      }
+    },
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "field": "id",
+          "as": "count_id"
+        }
+      ],
+      "groupby": [
+        "neighbourhood_cleansed"
+      ]
+    }
+  ],
+  "mark":{"type":"bar","color":"orange"},
+  "encoding": {
+    "y": {
+      "field": "count_id",
+      "type": "quantitative"
+    },
+    "x": {
+      "field": "neighbourhood_cleansed",
+      "type": "nominal"
+    }
+  },
+  "config": {}
+}

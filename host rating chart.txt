@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "A scatterplot showing horsepower and miles per gallons that opens a Google search for the car that you click on.",
+   "width": 700,
+  "height": 500,
+  "data": {"url": "https://raw.githubusercontent.com/JamesGowtham/Data-Visual/master/sampl.csv"},
+      "selection": {
+        "select": {
+          "fields": [
+            "place"
+          ],
+          "type": "single",
+          "bind": {
+            "input": "select",
+            "options": [ "All",
+              "Antwerp",
+              "Ghent",
+              "Brussels"
+            ]
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": {
+            "field": "price",
+            "range": [0,500]}
+        }, 
+        {
+          "filter": {"selection": "select"}}
+      ],
+  "mark": "circle",
+  "encoding": {
+    "y": {"field": "price", "type": "quantitative","axis":{"title": "Price per day"}},
+    "x": {"field": "host_rating", "type": "quantitative","axis":{"title": "Oomph Factor"}},
+    "color": {"field": "property_type", "type": "nominal","scale":{"scheme": "category20b"}},
+    "tooltip": {"field": "host_name", "type": "nominal"},
+    "size" :{"field":"experience_rating","type" : "quantitative"}
+  }
+}
